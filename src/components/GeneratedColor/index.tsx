@@ -10,6 +10,10 @@ interface GeneratedColorProps {
 export function GeneratedColor({ color }: GeneratedColorProps) {
   const checkColorBrightness = checkColorBrightnessProps(color);
 
+  function copyColor() {
+    navigator.clipboard.writeText(color);
+  }
+
   return (
     <div
       className='w-full h-16 flex flex-col justify-center items-center md:justify-center md:items-end md:flex-row md:h-80 group'
@@ -31,6 +35,7 @@ export function GeneratedColor({ color }: GeneratedColorProps) {
             'text-black': checkColorBrightness,
           })}
           weight='bold'
+          onClick={copyColor}
         />
         <LockOpen
           className={clsx('cursor-pointer text-lg sm:text-xl', {
