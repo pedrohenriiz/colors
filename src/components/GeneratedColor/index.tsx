@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 import { clsx } from 'clsx';
 import { LockOpen, ArrowClockwise, Copy } from 'phosphor-react';
 
@@ -5,9 +7,17 @@ import { checkColorBrightnessProps } from '../../utils/checkColorBrightness';
 
 interface GeneratedColorProps {
   color: string;
+  updateColor: (index: number) => void;
+  index: number;
+  isLocked: boolean;
 }
 
-export function GeneratedColor({ color }: GeneratedColorProps) {
+function GeneratedColor({
+  color,
+  updateColor,
+  index,
+  isLocked,
+}: GeneratedColorProps) {
   const checkColorBrightness = checkColorBrightnessProps(color);
 
   function copyColor() {
@@ -27,6 +37,7 @@ export function GeneratedColor({ color }: GeneratedColorProps) {
           })}
           weight='bold'
           aria-describedby='generated-new-color'
+          onClick={() => updateColor(index)}
         />
 
         <Copy
@@ -48,3 +59,5 @@ export function GeneratedColor({ color }: GeneratedColorProps) {
     </div>
   );
 }
+
+export default memo(GeneratedColor);

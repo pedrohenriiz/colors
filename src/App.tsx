@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Header } from './components/Header';
-import { GeneratedColor } from './components/GeneratedColor';
+import GeneratedColor from './components/GeneratedColor';
 import { generateRandomColor } from './utils/generateRandomColor';
 
 import './styles/global.css';
@@ -39,6 +39,24 @@ function App() {
     });
   }, []);
 
+  const updateSingleColor = useCallback((index: number) => {
+    const generatedColor = generateRandomColor();
+
+    setColors((oldColors) => {
+      const updateColors = oldColors.map((item) => {
+        if (Number(index) === item.index) {
+          return { ...item, color: generatedColor };
+        }
+
+        return item;
+      });
+
+      return updateColors;
+    });
+
+    return;
+  }, []);
+
   useEffect(() => {
     generateColors();
   }, []);
@@ -73,7 +91,13 @@ function App() {
             style={{ boxShadow: '8px 8px 0px 0px #000000' }}
           >
             {colors.map((item) => (
-              <GeneratedColor key={item.index} color={item.color} />
+              <GeneratedColor
+                key={item.index}
+                color={item.color}
+                updateColor={updateSingleColor}
+                index={item.index}
+                isLocked={item.isLocked}
+              />
             ))}
           </div>
 
