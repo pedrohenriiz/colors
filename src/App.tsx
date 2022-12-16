@@ -1,8 +1,9 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Header } from './components/Header';
 import { GeneratedColor } from './components/GeneratedColor';
-import './styles/global.css';
 import { generateRandomColor } from './utils/generateRandomColor';
+
+import './styles/global.css';
 
 type ColorProps = {
   color: string;
