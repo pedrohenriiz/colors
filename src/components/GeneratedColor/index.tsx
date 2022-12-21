@@ -1,7 +1,13 @@
 import { memo } from 'react';
 
 import { clsx } from 'clsx';
-import { LockOpen, ArrowClockwise, Copy } from 'phosphor-react';
+import {
+  LockOpen,
+  ArrowClockwise,
+  Copy,
+  Lock,
+  IconProps as PRIconProps,
+} from 'phosphor-react';
 
 import { checkColorBrightnessProps } from '../../utils/checkColorBrightness';
 
@@ -10,6 +16,12 @@ interface GeneratedColorProps {
   updateColor: (index: number) => void;
   index: number;
   isLocked: boolean;
+  lockUnlockColor: (index: number) => void;
+}
+
+interface IconProps extends PRIconProps {
+  className: string;
+  onClick: () => void;
 }
 
 function GeneratedColor({
@@ -17,12 +29,17 @@ function GeneratedColor({
   updateColor,
   index,
   isLocked,
+  lockUnlockColor,
 }: GeneratedColorProps) {
   const checkColorBrightness = checkColorBrightnessProps(color);
 
   function copyColor() {
     navigator.clipboard.writeText(color);
   }
+
+  const LockedIconState = isLocked
+    ? (props: IconProps) => <Lock {...props} />
+    : (props: IconProps) => <LockOpen {...props} />;
 
   return (
     <div
@@ -31,7 +48,7 @@ function GeneratedColor({
     >
       <div className='flex flex-row items-center justify-center space-x-10 sm:group-hover:flex md:flex-col md:space-x-0 md:space-y-10 md:mb-10 lg:hidden'>
         <ArrowClockwise
-          className={clsx('cursor-pointer text-lg sm:text-xl', {
+          className={clsx('select-none cursor-pointer text-lg sm:text-xl', {
             'text-white': !checkColorBrightness,
             'text-black': checkColorBrightness,
           })}
@@ -41,20 +58,24 @@ function GeneratedColor({
         />
 
         <Copy
-          className={clsx('cursor-pointer text-lg sm:text-xl', {
+          className={clsx('select-none cursor-pointer text-lg sm:text-xl', {
             'text-white': !checkColorBrightness,
             'text-black': checkColorBrightness,
           })}
           weight='bold'
           onClick={copyColor}
         />
-        <LockOpen
-          className={clsx('cursor-pointer text-lg sm:text-xl', {
-            'text-white': !checkColorBrightness,
-            'text-black': checkColorBrightness,
-          })}
-          weight='bold'
-        />
+
+        <div>
+          <LockedIconState
+            className={clsx('select-none cursor-pointer text-lg sm:text-xl', {
+              'text-white': !checkColorBrightness,
+              'text-black': checkColorBrightness,
+            })}
+            weight='bold'
+            onClick={() => lockUnlockColor(index)}
+          />
+        </div>
       </div>
     </div>
   );
