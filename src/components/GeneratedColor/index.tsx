@@ -9,13 +9,12 @@ import {
   IconProps as PRIconProps,
 } from 'phosphor-react';
 
+import { Color } from '../../dtos/color';
+
 import { checkColorBrightnessProps } from '../../utils/checkColorBrightness';
 
-interface GeneratedColorProps {
-  color: string;
+export interface GeneratedColorProps extends Color {
   updateColor: (index: number) => void;
-  index: number;
-  isLocked: boolean;
   lockUnlockColor: (index: number) => void;
 }
 
