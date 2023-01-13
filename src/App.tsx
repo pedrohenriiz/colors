@@ -1,13 +1,14 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Header } from './components/Header';
-import GeneratedColor from './components/GeneratedColor';
 import { generateRandomColor } from './utils/generateRandomColor';
-import { SavedColor } from './components/SavedColor';
 
 import './styles/global.css';
 import { useSavePalette } from './hooks/useSavePalette';
 import { useGetPalettes } from './hooks/useGetPalettes';
 import { useRemovePalette } from './hooks/useRemovePalette';
+import { SaveEditPalette } from './components/SaveEditPalette';
+import { GeneratedPaletteGrid } from './components/GeneratedPaletteGrid';
+import { SavedPalette } from './components/SavedPalette';
 
 export type ColorProps = {
   color: string;
@@ -107,7 +108,6 @@ function App() {
     selectedPalette: ColorProps[],
     index: number
   ) {
-    console.log(selectedPalette);
     const lockAllSelectedColors = selectedPalette.map((palette) => ({
       ...palette,
       isLocked: true,
@@ -156,44 +156,18 @@ function App() {
           </button>
         </div>
 
-        <div className='container flex flex-col items-center px-6 mx-auto mt-10 sm:mt-14 lg:max-w-lg lg:pr-0'>
-          <div
-            className='flex flex-col border-solid w-full border-4 border-black max-w-lg md:flex-row'
-            style={{ boxShadow: '8px 8px 0px 0px #000000' }}
-          >
-            {colors.map((item) => (
-              <GeneratedColor
-                key={new Date().getTime() + Math.random()}
-                color={item.color}
-                updateColor={updateSingleColor}
-                index={item.index}
-                isLocked={item.isLocked}
-                lockUnlockColor={lockUnlockColor}
-              />
-            ))}
-          </div>
+        <div className='container flex flex-col items-center sm:px-6 mx-auto mt-10 sm:mt-14 lg:max-w-lg lg:pr-0'>
+          <GeneratedPaletteGrid
+            colors={colors}
+            lockUnlockColor={lockUnlockColor}
+            updateSingleColor={updateSingleColor}
+          />
 
-          <div className='mt-14 flex flex-col space-x-0 space-y-8 sm:mt-11 sm:flex-row sm:space-y-0 sm:space-x-32 lg:space-x-0 lg:items-center'>
-            <button
-              className='border-solid border-2 w-fit self-center border-black bg-blue text-white px-3 py-2 rounded-[4px] text-lg lg:hidden'
-              style={{ boxShadow: '2px 2px 0px 0px #000000' }}
-              onClick={generateColors}
-            >
-              Generate
-            </button>
-
-            <button
-              className='border-solid border-2 w-fit self-center border-blue bg-white text-blue px-3 py-2 rounded-[4px] text-lg font-bold '
-              style={{ boxShadow: '2px 2px 0px 0px #6CA1D1' }}
-              onClick={savePalette}
-            >
-              {isEditting ? (
-                <span>Edit palette</span>
-              ) : (
-                <span>Save Palette</span>
-              )}
-            </button>
-          </div>
+          <SaveEditPalette
+            generateColors={generateColors}
+            savePalette={savePalette}
+            isEditting={isEditting}
+          />
         </div>
       </section>
 
@@ -205,30 +179,13 @@ function App() {
         <div className='flex flex-col gap-5 flex-1 mx-auto md:flex-row md:flex-wrap md:justify-center md:mx-auto md:items-center xl:justify-start xl:items-start'>
           {savedColors.map((item: any, index) => {
             return (
-              <div
-                className='flex flex-row relative border-solid w-full border-4 border-black max-w-[290px] group items-center justify-center'
-                style={{ boxShadow: '2px 4px 0px 0px #000000' }}
+              <SavedPalette
+                item={item}
+                index={index}
+                handleDeletePalette={handleDeletePalette}
+                handleSetPaletteOnEditting={handleSetPaletteOnEditting}
                 key={new Date().getTime() + Math.random()}
-              >
-                <SavedColor key={index} item={item} />
-
-                <div className='hidden absolute left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 group-hover:flex group-hover:flex-col group-hover:space-y-4'>
-                  <button
-                    className='border-2 border-solid border-black bg-gray-200 py-1 px-9 font-bold'
-                    style={{ boxShadow: '1px 1px 0px 0px #000000' }}
-                    onClick={() => handleSetPaletteOnEditting(item, index)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className='border-2 border-solid border-black bg-red py-1 px-9 font-bold text-white'
-                    style={{ boxShadow: '1px 1px 0px 0px #000000' }}
-                    onClick={() => handleDeletePalette(index)}
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
+              />
             );
           })}
         </div>

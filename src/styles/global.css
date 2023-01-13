@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind utilities;
 @tailwind components;
+
+@layer components {
+  .savedPaletteButtons {
+    @apply border-2 border-solid border-black py-1 px-9 font-bold;
+  }
+
+  .generatePaletteButtons {
+    @apply border-solid border-2 w-fit self-center px-3 py-2 rounded-[4px] text-lg;
+  }
+}
