@@ -1,10 +1,10 @@
-import { getPalettes, setPalette, removePalette } from '../storage/palettes';
-import { ColorProps } from '../App';
+import { getPalettes, setPalette } from "../storage/palettes";
+import { ColorProps } from "../App";
 
 type RemovePaletteProps = {
   removingCurrentIndex: number;
   isEditting: boolean;
-  setColors: (color: any) => void;
+  setColors: React.Dispatch<React.SetStateAction<ColorProps[]>>;
   setIsEditting: (isEditting: boolean) => void;
   setSavedColors: (colors: ColorProps[][]) => void;
 };
@@ -19,7 +19,7 @@ export function useRemovePalette({
   const savedLocalColors = getPalettes();
 
   const removeColorByIndex = savedLocalColors.filter(
-    (_, colorIndex) => colorIndex !== removingCurrentIndex
+    (element, colorIndex) => colorIndex !== removingCurrentIndex
   );
 
   setPalette(removeColorByIndex);

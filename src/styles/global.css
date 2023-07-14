@@ -8,6 +8,6 @@
   }
 
   .generatePaletteButtons {
-    @apply border-solid border-2 w-fit self-center px-3 py-2 rounded-[4px] text-lg;
+    @apply border-solid border-2 w-fit self-center px-3 py-2 rounded-[4px] text-xl font-sans;
   }
 }

@@ -1,5 +1,5 @@
-import { getPalettes, setPalette } from '../storage/palettes';
-import { ColorProps } from '../App';
+import { getPalettes, setPalette } from "../storage/palettes";
+import { ColorProps } from "../App";
 
 type SavePaletteProps = {
   colors: ColorProps[];
@@ -35,7 +35,6 @@ export function useSavePalette({
 
   if (isEditting) {
     newSavedColors = savedLocalColors.map((oldColor, index) => {
-      console.log(oldColor, index);
       if (index === edittingCurrentIndex) {
         return lockColors;
       }
@@ -50,12 +49,9 @@ export function useSavePalette({
     setEdittingPalette(false);
     setSavedColors(newSavedColors);
 
-    const unlockAllColors = newSavedColors.map((color) => {
-      console.log(color);
-      const unlockColors = color.map((item) => ({ ...item, isLocked: false }));
-
-      return unlockColors;
-    });
+    const unlockAllColors = newSavedColors.map((color) =>
+      color.map((item) => ({ ...item, isLocked: false }))
+    );
 
     setColors(unlockAllColors[edittingCurrentIndex || 0]);
   }
