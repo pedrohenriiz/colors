@@ -17,8 +17,6 @@ export type ColorProps = {
   isLocked: boolean;
 };
 
-const COLORS_POSITIONS = [0, 1, 2, 3, 4];
-
 function App() {
   const [colors, setColors] = useState<ColorProps[]>([]);
   const [isEditting, setIsEditting] = useState(false);
