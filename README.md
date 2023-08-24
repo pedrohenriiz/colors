@@ -20,7 +20,7 @@
 <span>Colors! is a simple color palette generation, with the objective of being simple and easy to use. </span>
 
 <div align="center"> 
-  <img src="assets/project-image.png" alt="Colors initial page" />
+  <img src="src/assets/project-image.png" alt="Colors initial page" />
 </div>
 
 ## Built With
